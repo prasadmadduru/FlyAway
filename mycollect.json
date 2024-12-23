@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "2222bba9-0bba-4210-8dcd-5ae7958a335f",
+		"name": "BookFligth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40084182",
+		"_collection_link": "https://demo00-8768.postman.co/workspace/Demo-Workspace~772ede6d-166d-4026-8bbe-2561347de747/collection/40084182-2222bba9-0bba-4210-8dcd-5ae7958a335f?action=share&source=collection_link&creator=40084182"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed ReferenceError: set is not defined",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check if bookings are returned\", function () {",
+							"    // Updated response parsing to handle HTML response",
+							"    var htmlData = pm.response.text();",
+							"    pm.expect(htmlData).to.include(\"bookflight\");",
+							"    pm.expect(htmlData).to.include(\"id=\");",
+							"    pm.environment.set(\"source\",\"Bangalore\"); // Fixed typo in pm.environment.set",
+							"    pm.environment.set(\"destination\",\"Chennai\"); // Fixed typo in pm.environment.set",
+							"});",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response includes booking details\", function () {",
+							"    const responseData = pm.response.text();",
+							"    ",
+							"    pm.expect(responseData).to.include(\"Source\");",
+							"    pm.expect(responseData).to.include(\"Destination\");",
+							"    pm.expect(responseData).to.include(\"Airline\");",
+							"    pm.expect(responseData).to.include(\"Duration\");",
+							"    pm.expect(responseData).to.include(\"Cost\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify if the response includes links to book flights with valid IDs\", function () {",
+							"    const responseData = pm.response.text();",
+							"",
+							"    pm.expect(responseData).to.include('<a href=\"bookflight?id=3\">Book Flight</a>');",
+							"    pm.expect(responseData).to.include('<a href=\"bookflight?id=7\">Book Flight</a');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response contains FlyAway copyright notice\", function () {",
+							"    pm.expect(pm.response.text()).to.include('(C) FlyAway 2019');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/FlyAway/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FlyAway",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the HTML content structure and required elements\", function () {",
+							"    const responseData = pm.response.text();",
+							"",
+							"    pm.expect(responseData).to.include(\"<!DOCTYPE html>\");",
+							"    pm.expect(responseData).to.include(\"<html>\");",
+							"    pm.expect(responseData).to.include(\"<head>\");",
+							"    pm.expect(responseData).to.include(\"<title>\");",
+							"    pm.expect(responseData).to.include(\"<body>\");",
+							"    pm.expect(responseData).to.include(\"<h3>\");",
+							"    pm.expect(responseData).to.include(\"<a href=\\\"home\\\">Home</a>\");",
+							"    pm.expect(responseData).to.include(\"<a href=\\\"login\\\">Login/Signup</a>\");",
+							"    pm.expect(responseData).to.include(\"<A href=\\\"memberbookings\\\">See Your Bookings</A>\");",
+							"    pm.expect(responseData).to.include(\"(C) FlyAway 2019\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Presence of 'Flight', 'from', 'to', and 'has been booked for' in the response\", function () {",
+							"    const responseData = pm.response.text();",
+							"",
+							"    pm.expect(responseData).to.include(\"Flight\");",
+							"    pm.expect(responseData).to.include(\"from\");",
+							"    pm.expect(responseData).to.include(\"to\");",
+							"    pm.expect(responseData).to.include(\"has been booked for\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Presence of links - Home, Login/Signup, and See Your Bookings\", function () {",
+							"    const responseData = pm.response.text();",
+							"",
+							"    pm.expect(responseData).to.include('Home');",
+							"    pm.expect(responseData).to.include('Login/Signup');",
+							"    pm.expect(responseData).to.include('See Your Bookings');",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/FlyAway/completepurchase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FlyAway",
+						"completepurchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 405\", function () {",
+							"    pm.expect(pm.response.code).to.equal(405);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"// pm.test(\"Response has the required fields - type, message, and description\", function () {",
+							"//     const responseData = pm.response.json();",
+							"    ",
+							"//     pm.expect(responseData).to.be.an('object');",
+							"//     pm.expect(responseData).to.include.all.keys('type', 'message', 'description');",
+							"// });",
+							"",
+							"",
+							"pm.test(\"Content-Type header is text/html\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate that the response body contains the expected HTML structure\", function () {",
+							"    const expectedHtmlStructure = \"<!doctype html><html lang=\\\"en\\\"><head><title>HTTP Status 405 – Method Not Allowed</title><style type=\\\"text/css\\\">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 405 – Method Not Allowed</h1><hr class=\\\"line\\\" /><p><b>Type</b> Status Report</p><p><b>Message</b> Request method &#39;POST&#39; not supported</p><p><b>Description</b> The method received in the request-line is known by the origin server but not supported by the target resource.</p><hr class=\\\"line\\\" /><h3>Apache Tomcat/9.0.98</h3></body></html>\";",
+							"",
+							"    pm.expect(pm.response.text()).to.include(expectedHtmlStructure);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"source\":\"Bangalore\",\n    \"destination\":\"Chennai\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/FlyAway/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FlyAway",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/FlyAway/bookflight?id=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"FlyAway",
+						"bookflight"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
