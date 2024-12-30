@@ -22,7 +22,7 @@ public class FlightSearchTest {
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("http://localhost:8080/FlyAway/home"); // Replace with your URL
+        driver.get("http://localhost:8081/FlyAway/home"); // Replace with your URL
         homePage = new HomePage(driver);
         loginPage =new LoginPage(driver);
         findFlight=new FindFlight(driver);
